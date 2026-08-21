@@ -1,61 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#000000" />
-  <title>Miraculous — Text RPG</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="theme-color" content="#000000" />
+  <title>Miraculous — Character Creation</title><link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main id="app" class="app-shell">
-    <header class="topbar">
-      <div class="brand">MIRACULOUS</div>
-      <div class="top-controls" aria-label="Game settings">
-        <button id="sound-toggle" class="icon-button" type="button" aria-pressed="true" title="Toggle sound">🔊</button>
-        <button id="settings-toggle" class="icon-button" type="button" title="Open settings">⚙</button>
-      </div>
-    </header>
-
-    <section id="creation-screen" class="screen creation-screen" aria-labelledby="creation-title">
-      <div class="creation-card">
-        <div class="crest" aria-hidden="true">✦</div>
-        <p class="eyebrow">A TEXT-BASED RPG</p>
-        <h1 id="creation-title">Create Your Character</h1>
-        <p class="intro">Build your character, then review your choices before the story begins.</p>
-        <form id="character-form">
-          <div class="field-grid">
-            <label class="field"><span>Name</span><input id="player-name" name="name" maxlength="24" autocomplete="off" placeholder="Enter your name" required /></label>
-            <div class="field fixed-field"><span>Age</span><div class="fixed-value">18</div><input id="player-age" name="age" type="hidden" value="18" /></div>
-          </div>
-          <div class="trait-section">
-            <div class="section-heading"><div><h2>Choose 3 personality traits</h2><p>Pick three from the pool of 50.</p></div><strong id="trait-count">0 / 3</strong></div>
-            <div id="trait-pool" class="trait-pool" role="group" aria-label="Personality traits"></div>
-          </div>
-          <p id="creation-error" class="error" role="alert" hidden></p>
-          <button id="start-button" class="primary-button" type="submit" disabled>Continue</button>
-        </form>
-      </div>
-    </section>
-
-    <section id="review-screen" class="screen review-screen" hidden aria-labelledby="review-title">
-      <div class="review-card">
-        <div class="review-header"><div><p class="eyebrow">CHARACTER SETUP</p><h1 id="review-title">Review Your Character</h1></div><div class="review-mark">✓</div></div>
-        <p class="intro">Make sure everything looks right. You can go back and change your personality traits before you begin.</p>
-        <div class="review-grid"><div class="review-item"><span>Name</span><strong id="review-name">—</strong></div><div class="review-item"><span>Age</span><strong id="review-age">18</strong></div></div>
-        <div class="review-traits"><div class="section-heading"><div><h2>Your personality</h2><p>These three traits will be used later to determine your first Miraculous.</p></div></div><div id="review-trait-list" class="review-trait-list"></div></div>
-        <div class="review-actions"><button id="back-to-creation" class="secondary-button" type="button">Back &amp; Edit</button><button id="confirm-character" class="primary-button" type="button">Begin Story</button></div>
-      </div>
-    </section>
-
-    <section id="game-screen" class="screen game-screen" hidden>
-      <aside id="stats-panel" class="stats-panel" aria-label="Player stats"><div class="stats-header"><h2>STATUS</h2><button id="close-stats" class="mini-button" type="button">×</button></div><div class="player-summary"><span class="avatar-dot"></span><div><strong id="stats-name">Player</strong><span id="stats-level">Level 1</span></div></div><div class="stat-list"><div><span>XP</span><strong id="stat-xp">0 / 100</strong></div><div><span>Coins</span><strong id="stat-coins">0</strong></div><div><span>Energy</span><strong id="stat-energy">100 / 100</strong></div><div><span>Miraculous</span><strong id="stat-miraculous">Undiscovered</strong></div></div></aside>
-      <button id="open-stats" class="stats-tab" type="button">STATS</button>
-      <div class="story-area"><div class="story-meta"><span>PROLOGUE</span><span id="story-location">PARIS</span></div><div id="story-log" class="story-log" aria-live="polite"></div><div id="choices" class="choices"></div></div>
-    </section>
-
-    <dialog id="settings-dialog" class="settings-dialog"><div class="dialog-header"><h2>Settings</h2><button id="close-settings" class="mini-button" type="button">×</button></div><label class="color-control"><span>Text color</span><input id="text-color" type="color" value="#e7e7e7" /></label><p class="settings-note">Your chosen text color applies to the story and choices.</p></dialog>
-  </main>
-  <script src="app.js"></script>
-</body>
-</html>
+<main id="app" class="app-shell">
+<header class="topbar"><div class="brand">MIRACULOUS</div><div class="top-controls"><button id="sound-toggle" class="icon-button" type="button" aria-pressed="true">🔊</button><button id="settings-toggle" class="icon-button" type="button">⚙</button></div></header>
+<section class="screen creation-screen" aria-labelledby="creation-title"><div class="creation-card"><div class="crest" aria-hidden="true">✦</div><p class="eyebrow">A TEXT-BASED RPG</p><h1 id="creation-title">Create Your Character</h1><p class="intro">Choose your name and three personality traits. Your choices will determine which Miraculous is drawn to you.</p>
+<form id="character-form"><label class="field"><span>Name</span><input id="player-name" maxlength="24" autocomplete="off" placeholder="Enter your name" required /></label><div class="fixed-field"><span>Age</span><div class="fixed-value">14</div></div>
+<div class="trait-section"><div class="section-heading"><div class="section-title-with-help"><div><h2>Choose 3 personality traits</h2><p>Pick three from the pool of 50.</p></div><button id="trait-help" class="help-button" type="button" aria-expanded="false" aria-controls="trait-help-panel">?</button></div><strong id="trait-count">0 / 3</strong></div>
+<div id="trait-help-panel" class="help-panel" hidden><strong>How does this work?</strong><p>Your three traits work together. The system compares your combination against the personality profiles of the Miraculouses.</p><a href="trait-calculator.html" target="_blank" rel="noopener">Open the Trait → Miraculous Calculator ↗</a></div><div id="trait-pool" class="trait-pool" role="group" aria-label="Personality traits"></div></div>
+<p id="creation-error" class="error" role="alert" hidden></p><button id="start-button" class="primary-button" type="submit" disabled>Continue</button></form></div></section>
+<dialog id="settings-dialog" class="settings-dialog"><div class="dialog-header"><h2>Settings</h2><button id="close-settings" class="mini-button" type="button">×</button></div><label class="color-control"><span>Text color</span><input id="text-color" type="color" value="#e7e7e7" /></label><p class="settings-note">Your chosen text color applies to the story and choices.</p></dialog>
+</main><script src="app.js"></script></body></html>
