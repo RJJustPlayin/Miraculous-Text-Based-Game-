@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#000000" />
+  <title>Miraculous Trait Calculator</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .calculator-screen{min-height:calc(100vh - 70px);display:grid;place-items:center;padding:32px 20px}
+    .calculator-card{width:min(980px,100%);background:#050505;border:1px solid #242424;border-radius:22px;padding:30px;box-shadow:0 24px 80px rgba(0,0,0,.65)}
+    .calculator-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:24px}
+    .calculator-head h1{margin:4px 0 8px;font-size:clamp(28px,5vw,46px)}
+    .calculator-head p{margin:0;color:#8d8d8d;max-width:680px;line-height:1.55}
+    .selection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 28px}
+    .selection{border:1px solid #292929;background:#0b0b0b;border-radius:14px;padding:14px;min-height:70px}
+    .selection span{display:block;color:#666;font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px}
+    .selection strong{font-size:16px}
+    .trait-calculator-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;max-height:310px;overflow:auto;padding-right:4px}
+    .calc-trait{background:#090909;color:#d8d8d8;border:1px solid #242424;border-radius:11px;padding:11px 12px;text-align:left;cursor:pointer;transition:.16s ease}
+    .calc-trait:hover{border-color:#555;transform:translateY(-1px)}
+    .calc-trait.selected{border-color:#fff;background:#171717;color:#fff;box-shadow:0 0 0 1px #fff inset}
+    .results{margin-top:28px;border-top:1px solid #202020;padding-top:24px}
+    .results h2{margin:0 0 14px}
+    .result-row{display:grid;grid-template-columns:34px 1fr 70px;gap:12px;align-items:center;margin:9px 0}
+    .rank{color:#666;text-align:right;font-variant-numeric:tabular-nums}.result-name{font-weight:650}.bar{height:9px;background:#171717;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:#e8e8e8;border-radius:99px}.score{font-variant-numeric:tabular-nums;text-align:right;color:#aaa}
+    .winner{border:1px solid #fff;border-radius:14px;padding:16px;margin-bottom:18px;background:#0d0d0d}.winner small{color:#777;text-transform:uppercase;letter-spacing:.12em}.winner strong{display:block;font-size:24px;margin-top:5px}
+    .note{color:#666;font-size:13px;line-height:1.5;margin-top:20px}
+    @media(max-width:650px){.calculator-head{display:block}.selection-grid{grid-template-columns:1fr}.calculator-card{padding:20px}}
+  </style>
+</head>
+<body>
+  <main id="app" class="app-shell">
+    <header class="topbar"><div class="brand">MIRACULOUS</div><a class="icon-button" href="index.html" aria-label="Back to game">←</a></header>
+    <section class="calculator-screen">
+      <div class="calculator-card">
+        <div class="calculator-head">
+          <div><p class="eyebrow">DESIGN TOOL</p><h1>Trait → Miraculous Calculator</h1><p>Pick exactly three traits. The calculator scores all 19 Chinese Miraculouses and ranks the matches.</p></div>
+        </div>
+        <div class="selection-grid"><div class="selection"><span>Trait 01</span><strong id="pick-1">Not selected</strong></div><div class="selection"><span>Trait 02</span><strong id="pick-2">Not selected</strong></div><div class="selection"><span>Trait 03</span><strong id="pick-3">Not selected</strong></div></div>
+        <div id="trait-calculator-grid" class="trait-calculator-grid"></div>
+        <div class="results"><div id="winner" class="winner"><small>Current match</small><strong>Choose 3 traits</strong></div><h2>Compatibility ranking</h2><div id="results-list"></div></div>
+        <p class="note">This is a design calculator. Its weighting table is intentionally provisional and does not change the main game yet. We can tune the 50-trait × 19-Miraculous matrix together before it becomes canon.</p>
+      </div>
+    </section>
+  </main>
+  <script>
+    const traits=['Brave','Curious','Determined','Loyal','Independent','Compassionate','Clever','Patient','Ambitious','Calm','Bold','Honest','Playful','Disciplined','Resourceful','Protective','Fearless','Observant','Adaptable','Confident','Creative','Persistent','Kind','Strategic','Adventurous','Selfless','Competitive','Thoughtful','Rebellious','Focused','Optimistic','Cautious','Charismatic','Practical','Empathetic','Resilient','Inventive','Daring','Reliable','Mysterious','Leader','Free-Spirited','Analytical','Passionate','Tactical','Patiently Bold','Witty','Vigilant','Tenacious','Open-Minded'];
+    const miraculous=['Ladybug','Cat','Butterfly','Peacock','Fox','Turtle','Bee','Mouse','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat','Monkey','Rooster','Dog','Pig'];
+    const profiles={
+      Ladybug:['Creative','Resourceful','Optimistic','Clever','Adaptable','Compassionate','Strategic'], Cat:['Independent','Bold','Playful','Rebellious','Confident','Adventurous','Daring'], Butterfly:['Compassionate','Charismatic','Ambitious','Passionate','Mysterious','Strategic','Empathetic'], Peacock:['Creative','Observant','Passionate','Mysterious','Thoughtful','Confident','Charismatic'], Fox:['Clever','Witty','Adaptable','Mysterious','Playful','Observant','Strategic'], Turtle:['Patient','Calm','Protective','Loyal','Reliable','Disciplined','Selfless'], Bee:['Confident','Bold','Disciplined','Competitive','Leader','Determined','Focused'], Mouse:['Curious','Resourceful','Adaptable','Clever','Playful','Persistent','Open-Minded'], Ox:['Strong','Determined','Reliable','Protective','Disciplined','Tenacious','Patient'], Tiger:['Brave','Fearless','Bold','Passionate','Competitive','Daring','Resilient'], Rabbit:['Curious','Adventurous','Clever','Open-Minded','Free-Spirited','Observant','Creative'], Dragon:['Brave','Disciplined','Adaptable','Fearless','Strategic','Determined','Resilient'], Snake:['Patient','Observant','Strategic','Calm','Tactical','Mysterious','Focused'], Horse:['Independent','Adventurous','Free-Spirited','Adaptable','Confident','Practical','Daring'], Goat:['Creative','Inventive','Thoughtful','Passionate','Independent','Open-Minded','Persistent'], Monkey:['Playful','Clever','Witty','Curious','Rebellious','Creative','Adaptable'], Rooster:['Confident','Observant','Bold','Honest','Focused','Leader','Charismatic'], Dog:['Loyal','Protective','Reliable','Compassionate','Honest','Selfless','Persistent'], Pig:['Kind','Compassionate','Optimistic','Playful','Empathetic','Selfless','Honest']};
+    // Correct the one illustrative trait that is not in the 50-trait pool.
+    profiles.Ox=profiles.Ox.map(t=>t==='Strong'?'Resilient':t);
+    const state=[]; const grid=document.getElementById('trait-calculator-grid');
+    traits.forEach(trait=>{const b=document.createElement('button');b.className='calc-trait';b.type='button';b.textContent=trait;b.onclick=()=>toggle(trait,b);grid.appendChild(b)});
+    function toggle(trait,b){if(state.includes(trait)){state.splice(state.indexOf(trait),1);b.classList.remove('selected')}else{if(state.length>=3)return;state.push(trait);b.classList.add('selected')}render()}
+    function score(name){const strong=profiles[name]||[];return state.reduce((sum,t)=>sum+(strong.includes(t)?3:0),0)}
+    function render(){for(let i=1;i<=3;i++)document.getElementById('pick-'+i).textContent=state[i-1]||'Not selected';const ranked=miraculous.map(name=>({name,score:score(name)})).sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));const max=Math.max(1,ranked[0].score);document.getElementById('winner').innerHTML=state.length===3?`<small>Current match</small><strong>${ranked[0].name}</strong>`:'<small>Current match</small><strong>Choose 3 traits</strong>';document.getElementById('results-list').innerHTML=ranked.map((r,i)=>`<div class="result-row"><span class="rank">${String(i+1).padStart(2,'0')}</span><span><span class="result-name">${r.name}</span><span class="bar"><i style="width:${(r.score/max)*100}%"></i></span></span><span class="score">${r.score}</span></div>`).join('')}
+    render();
+  </script>
+</body>
+</html>
