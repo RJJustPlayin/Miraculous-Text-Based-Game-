@@ -22,67 +22,48 @@
         <div class="crest" aria-hidden="true">✦</div>
         <p class="eyebrow">A TEXT-BASED RPG</p>
         <h1 id="creation-title">Create Your Character</h1>
-        <p class="intro">Choose your identity and three personality traits. Your choices will quietly determine which Miraculous answers your call.</p>
-
+        <p class="intro">Build your character, then review your choices before the story begins.</p>
         <form id="character-form">
           <div class="field-grid">
-            <label class="field">
-              <span>Name</span>
-              <input id="player-name" name="name" maxlength="24" autocomplete="off" placeholder="Enter your name" required />
-            </label>
-            <label class="field">
-              <span>Age</span>
-              <input id="player-age" name="age" type="number" min="10" max="30" value="16" required />
-            </label>
+            <label class="field"><span>Name</span><input id="player-name" name="name" maxlength="24" autocomplete="off" placeholder="Enter your name" required /></label>
+            <label class="field"><span>Age</span><input id="player-age" name="age" type="number" min="10" max="30" value="16" required /></label>
           </div>
-
           <div class="trait-section">
-            <div class="section-heading">
-              <div>
-                <h2>Choose 3 personality traits</h2>
-                <p>Pick three from the pool of 50. Your selection cannot be changed after you begin.</p>
-              </div>
-              <strong id="trait-count">0 / 3</strong>
-            </div>
+            <div class="section-heading"><div><h2>Choose 3 personality traits</h2><p>Pick three from the pool of 50.</p></div><strong id="trait-count">0 / 3</strong></div>
             <div id="trait-pool" class="trait-pool" role="group" aria-label="Personality traits"></div>
           </div>
-
           <p id="creation-error" class="error" role="alert" hidden></p>
-          <button id="start-button" class="primary-button" type="submit" disabled>Start Game</button>
+          <button id="start-button" class="primary-button" type="submit" disabled>Continue</button>
         </form>
+      </div>
+    </section>
+
+    <section id="review-screen" class="screen review-screen" hidden aria-labelledby="review-title">
+      <div class="review-card">
+        <div class="review-header"><div><p class="eyebrow">CHARACTER SETUP</p><h1 id="review-title">Review Your Character</h1></div><div class="review-mark">✓</div></div>
+        <p class="intro">Make sure everything looks right. You can go back and change your personality traits before you begin.</p>
+        <div class="review-grid">
+          <div class="review-item"><span>Name</span><strong id="review-name">—</strong></div>
+          <div class="review-item"><span>Age</span><strong id="review-age">—</strong></div>
+        </div>
+        <div class="review-traits"><div class="section-heading"><div><h2>Your personality</h2><p>These three traits will be used later to determine your first Miraculous.</p></div></div><div id="review-trait-list" class="review-trait-list"></div></div>
+        <div class="review-actions"><button id="back-to-creation" class="secondary-button" type="button">Back &amp; Edit</button><button id="confirm-character" class="primary-button" type="button">Begin Story</button></div>
       </div>
     </section>
 
     <section id="game-screen" class="screen game-screen" hidden>
       <aside id="stats-panel" class="stats-panel" aria-label="Player stats">
         <div class="stats-header"><h2>STATUS</h2><button id="close-stats" class="mini-button" type="button">×</button></div>
-        <div class="player-summary">
-          <span class="avatar-dot"></span>
-          <div><strong id="stats-name">Player</strong><span id="stats-level">Level 1</span></div>
-        </div>
-        <div class="stat-list">
-          <div><span>XP</span><strong id="stat-xp">0 / 100</strong></div>
-          <div><span>Coins</span><strong id="stat-coins">0</strong></div>
-          <div><span>Energy</span><strong id="stat-energy">100 / 100</strong></div>
-          <div><span>Miraculous</span><strong id="stat-miraculous">Undiscovered</strong></div>
-        </div>
+        <div class="player-summary"><span class="avatar-dot"></span><div><strong id="stats-name">Player</strong><span id="stats-level">Level 1</span></div></div>
+        <div class="stat-list"><div><span>XP</span><strong id="stat-xp">0 / 100</strong></div><div><span>Coins</span><strong id="stat-coins">0</strong></div><div><span>Energy</span><strong id="stat-energy">100 / 100</strong></div><div><span>Miraculous</span><strong id="stat-miraculous">Undiscovered</strong></div></div>
       </aside>
-
       <button id="open-stats" class="stats-tab" type="button">STATS</button>
-
-      <div class="story-area">
-        <div class="story-meta"><span>PROLOGUE</span><span id="story-location">PARIS</span></div>
-        <div id="story-log" class="story-log" aria-live="polite"></div>
-        <div id="choices" class="choices"></div>
-      </div>
+      <div class="story-area"><div class="story-meta"><span>PROLOGUE</span><span id="story-location">PARIS</span></div><div id="story-log" class="story-log" aria-live="polite"></div><div id="choices" class="choices"></div></div>
     </section>
 
     <dialog id="settings-dialog" class="settings-dialog">
       <div class="dialog-header"><h2>Settings</h2><button id="close-settings" class="mini-button" type="button">×</button></div>
-      <label class="color-control">
-        <span>Text color</span>
-        <input id="text-color" type="color" value="#e7e7e7" />
-      </label>
+      <label class="color-control"><span>Text color</span><input id="text-color" type="color" value="#e7e7e7" /></label>
       <p class="settings-note">Your chosen text color applies to the story and choices.</p>
     </dialog>
   </main>
